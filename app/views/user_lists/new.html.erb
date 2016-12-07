@@ -1,0 +1,43 @@
+<div class="container">
+	<h1 class="center blue-text">Create Restaurant List</h1>
+
+	<div class="row">
+		<form class="col s11 offset-s1">
+			<div class="row">
+				<div class="input-field col s12">
+					<input name="title" placeholder="Title" id="title" type="text" class="validate">
+					<label for="title">Title</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<input name="description" placeholder="Description" id="description" type="text" class="validate">
+					<label for="description">Description</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12">
+					<input name="restaurant[]" id="restaurantInput1" placeholder="Restaurant" type="text" class="validate">
+					<label for="restaurant">Restaurant</label>
+				</div>
+			</div>
+
+			<!-- Input Field Wrapper -->
+			<div class="input-wrapper-field">
+
+			</div>
+
+			<a id="addInputButton" class="btn-floating btn waves-effect waves-light red">
+				<i class="fa fa-plus"></i>
+			</a>
+
+			<div class="row">
+				<div class="input-field col s6">
+					<button id="submitList" class="red red-accent-4 waves effect waves-light btn">Submit List</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

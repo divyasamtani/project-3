@@ -1,0 +1,65 @@
+.statics.main {
+
+  h2 {
+    color: black;
+    font-weight: bold;
+    padding: 30px;
+    margin: 0px;
+  }
+
+
+  // COLLAPSIBLE
+
+  .collapsible-header {
+    height: 50px;
+  }
+
+  #listTitle {
+    font-weight: bold;
+  }
+
+  #restaurantlist {
+    padding-left: 20px;
+  }
+
+  .showrestaurants {
+    position: relative;
+  }
+
+  .restaurantWrapper {
+    padding-top: 10px;
+
+  }
+
+  .starIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+}
+
+#logo {
+  display: inline;
+  position: absolute;
+  content: image-url('brandlogo.png');
+  background-position: center center;
+  background-size: cover;
+  padding-left: 5px;
+  padding-top: 5px;
+  height: 80px;
+}
+
+.navbar-fixed {
+  height: 90px;
+
+}
+
+#logoutButton, #sign_inButton {
+  height: 50px;
+  padding-top: 8px;
+  margin-top: 10px
+}
+

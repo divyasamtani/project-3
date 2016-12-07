@@ -1,0 +1,11 @@
+{
+  "name": "project3",
+  "version": "0.0.1",
+  "main": "",
+  "private": true,
+  "dependencies": {
+    "materialize": "^0.97.7",
+    "j-toker": "^0.0.9",
+    "font-awesome": "^4.7.0"
+  }
+}

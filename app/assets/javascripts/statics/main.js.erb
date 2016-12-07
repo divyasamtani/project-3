@@ -1,0 +1,158 @@
+$('.statics.main').ready(function(){
+	console.log('main')
+
+	var getLists = function () {
+    $('#lists-index').html('');
+		$.ajax({
+			url: '/api/lists',
+			method: 'get',
+			success: function (lists) {
+				$('#lists-index').html('');
+
+				lists.forEach(function (list) {
+
+					var restaurants = "";
+
+					for(var i = 0; i < list.list_restaurants.length; i++) {
+            var check = ''
+
+            if (list.restaurant_checked[i][0] == true) {
+              check = 'checked="checked"'
+            } else {
+              check = ''
+            };
+
+						restaurants += '<li>' + '<span data-list-id="' + list.id + '"><input type="checkbox" ' + check + ' id="' + list.title + list.list_restaurants[i] + i + '" data-id="' + list.restaurant_checked[i][1] +'"/><label for="' + list.title + list.list_restaurants[i] + i + '">' + list.list_restaurants[i] + '</label>' + '</span></li>';
+				  }
+
+					var	html =
+										'<div class="col s6">' +
+											'<ul class="collapsible" data-collapsible="accordion">' +
+												'<li>' +
+													'<div class="collapsible-header green lighten-5">' +
+											       '<span id="listTitle">' + list.title + '</span>' + ' ' + 'by' + ' ' + list.user_name +
+													'</div>' +
+													'<div class="collapsible-body white">' +
+														'<form action="#">' +
+                              '<div class="showrestaurants">' +
+                                '<div class="restaurantWrapper">' + '<ul id="restaurantlist">' + restaurants + '</ul>'  +
+                                '</div>' +
+                                '<div class="starIcon">' +
+                                  '<i class="fa fa-star fa-2x bookmark" data-favourite="no" data-list-id="' + list.id + '" aria-hidden="true"></i>' +
+                                '</div>' +
+                              '</div>' +
+			                			'</form>' +
+	                				'</div>' +
+	              				'</li>' +
+	              			'</ul>' +
+	              		'</div>';
+          $('#lists-index').append(html);
+        });
+				$(".collapsible").collapsible({
+      		accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    		});
+      }, error: function (resp) {
+        console.log(resp);
+      }
+		});
+    checkboxEventListener();
+  };
+
+  var checkboxEventListener = function() {
+    $('#lists-index').on('change', 'input:checkbox', (function(e){
+      var restListId = e.currentTarget.dataset.id;
+      var checked = e.currentTarget.checked;
+      var params = {
+        restaurant_list: {
+          // id: restListId,
+          checked: checked
+        }
+      }
+      $.ajax({
+        url: '/api/user/restaurant_list/' + restListId,
+        method: 'put',
+        data: params,
+        success: function(){
+          console.log('successfully updated restaurant!')
+        },
+        error: function(resp) {
+          console.log(resp)
+        }
+      })
+    }))
+  };
+
+  var createBookmark = function (listid) {
+		$.ajax({
+        url: '/api/user/bookmarks',
+        method: 'post',
+        data: {ListBookmark:
+          {list_id: listid}
+        },
+        success: function (bookmark) {
+        	console.log('bookmarked');
+        },
+        error: function (resp) {
+          console.log(resp);
+        }
+    });
+  };
+
+// BOOKMARK BUTTON FUNCTIONALITY
+    var setBookmarkButton = function () {
+    $('#lists-index').on('click', '.bookmark', function(e) {
+      e.preventDefault();
+      var ListId = e.currentTarget.dataset.listId;
+      createBookmark(ListId);
+    });
+  };
+
+
+	var signInModal = function() {
+		// Able to open modal.
+
+		$('.modal-trigger').leanModal();
+		// Signup Modal
+
+		$('#signupModalOpen').on('click', function(e) {
+			$('#signin').closeModal();
+			$('#signup').openModal();
+			e.preventDefault();
+		});
+
+		// Register button click event
+		$('#registerButton').on('click', function(e) {
+			$('#signup').closeModal();
+			e.preventDefault();
+		});
+
+		// Login button click event
+		$('#loginButton').on('click', function(e) {
+			$('#signin').closeModal();
+      window.location = "http://localhost:3000/user/lists"
+			e.preventDefault();
+		});
+	};
+
+	var init = function () {
+		signInModal();
+		getLists();
+		setBookmarkButton();
+	};
+
+
+	init();
+
+});
+
+
+// '<div class="collapsible-body white">' +
+//  '<form action="#">' +
+//    '<div id="padding">' + '</div>' +
+//    '<div class="col s10">' +  list.description  + '</div>' +
+//    '<div class="col s2">' +
+//      '<i class="fa fa-star fa-2x bookmark" data-favourite="no" aria-hidden="true"></i>' +
+//    '</div>' +
+//      '<p>' + '<ul>' + restaurants + '</ul>' + '</p>' +
+//  '</form>' +
+// '</div>' +
